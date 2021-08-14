@@ -70,19 +70,19 @@ public class MainActivity extends AppCompatActivity implements GLSurfaceView.Ren
     private int uColor;
 
     private static final String VERTEX_SHADER = String.format(
-            "attribute vec4 a_Position;\n" +
+            "attribute vec4 %s;\n" +
                     "void main() {\n" +
                     "    gl_Position = %s;\n" +
                     "}",
-            A_POSITION
+            A_POSITION, A_POSITION
     );
     private static final String FRAGMENT_SHADER = String.format(
             "precision mediump float;\n" +
-                    "uniform vec4 u_Color;\n" +
+                    "uniform vec4 %s;\n" +
                     "void main() {\n" +
                     "    gl_FragColor = %s;\n" +
                     "}",
-            U_COLOR
+            U_COLOR, U_COLOR
     );
 
     private GLSurfaceView mGLSurfaceView;
