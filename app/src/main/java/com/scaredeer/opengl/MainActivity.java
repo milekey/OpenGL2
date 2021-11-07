@@ -46,7 +46,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class MainActivity extends AppCompatActivity implements GLSurfaceView.Renderer {
-    private static final String TAG = "MainActivity";
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int BYTES_PER_FLOAT = 4; // Java float is 32-bit = 4-byte
     private static final int POSITION_COMPONENT_COUNT = 2; // x, y（※ z は常に 0 なので省略）
