@@ -110,9 +110,7 @@ class Renderer : GLSurfaceView.Renderer {
          * Links a vertex shader and a fragment shader together into an OpenGL
          * program. Returns the OpenGL program object ID, or 0 if linking failed.
          *
-         *
-         * cf. https://media.pragprog.com/titles/kbogla/code/AirHockey1/src/com/airhockey/android/util/ShaderHelper.java
-         *
+         * @see <a href="https://media.pragprog.com/titles/kbogla/code/AirHockey1/src/com/airhockey/android/util/ShaderHelper.java">OpenGL ES 2 for Android</a>
          * @param vertexShaderId   OpenGL object ID of vertex shader
          * @param fragmentShaderId OpenGL object ID of fragment shader
          * @return OpenGL program object ID (or 0 if linking failed)
@@ -156,12 +154,9 @@ class Renderer : GLSurfaceView.Renderer {
         }
 
         /**
-         * Validates an OpenGL program. Should only be called when developing the
-         * application.
+         * Validates an OpenGL program. Should only be called when developing the application.
          *
-         *
-         * cf. https://media.pragprog.com/titles/kbogla/code/AirHockey1/src/com/airhockey/android/util/ShaderHelper.java
-         *
+         * @see <a href="https://media.pragprog.com/titles/kbogla/code/AirHockey1/src/com/airhockey/android/util/ShaderHelper.java">OpenGL ES 2 for Android</a>
          * @param programObjectId OpenGL program object ID to validate
          * @return boolean
          */
