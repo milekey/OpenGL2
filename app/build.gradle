@@ -6,7 +6,7 @@ plugins {
 android {
     compileSdk 31
     defaultConfig {
-        applicationId 'com.scaredeer.opengl'
+        applicationId 'com.scaredeer.opengl2'
         minSdk 30
         targetSdk 31
         versionCode 1
