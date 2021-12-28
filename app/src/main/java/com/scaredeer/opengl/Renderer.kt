@@ -33,10 +33,10 @@ class Renderer : GLSurfaceView.Renderer {
 
         private val TILE = floatArrayOf(
             // x, y
-            -0.5f, -0.5f,  // 左下
+            -0.5f, -0.5f, // 左下
             -0.5f, 0.5f,  // 左上
             0.5f, -0.5f,  // 右下
-            0.5f, 0.5f // 右上
+            0.5f, 0.5f    // 右上
         )
 
         // Attributes
