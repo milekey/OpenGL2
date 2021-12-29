@@ -1,13 +1,13 @@
 package com.scaredeer.opengl
 
+import android.opengl.GLES20.*
 import android.opengl.GLSurfaceView
-import javax.microedition.khronos.opengles.GL10
-import android.opengl.GLES20
 import android.util.Log
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
+import javax.microedition.khronos.opengles.GL10
 
 /**
  * ゲームのメインループに相当するクラス
@@ -70,34 +70,34 @@ class Renderer : GLSurfaceView.Renderer {
          */
         private fun compileShader(type: Int, shaderCode: String): Int {
             // Create a new shader object.
-            val shaderObjectId = GLES20.glCreateShader(type)
+            val shaderObjectId = glCreateShader(type)
             if (shaderObjectId == 0) {
                 Log.w(TAG, "Could not create new shader.")
                 return 0
             }
 
             // Pass in (upload) the shader source.
-            GLES20.glShaderSource(shaderObjectId, shaderCode)
+            glShaderSource(shaderObjectId, shaderCode)
 
             // Compile the shader.
-            GLES20.glCompileShader(shaderObjectId)
+            glCompileShader(shaderObjectId)
 
             // Get the compilation status.
             val compileStatus = IntArray(1)
-            GLES20.glGetShaderiv(shaderObjectId, GLES20.GL_COMPILE_STATUS, compileStatus, 0)
+            glGetShaderiv(shaderObjectId, GL_COMPILE_STATUS, compileStatus, 0)
 
             // Print the shader info log to the Android log output.
             Log.v(TAG, """
             Result of compiling source:
                 $shaderCode
             Log:
-                ${GLES20.glGetShaderInfoLog(shaderObjectId)}
+                ${glGetShaderInfoLog(shaderObjectId)}
             """.trimIndent())
 
             // Verify the compile status.
             if (compileStatus[0] == 0) {
                 // If it failed, delete the shader object.
-                GLES20.glDeleteShader(shaderObjectId)
+                glDeleteShader(shaderObjectId)
                 Log.w(TAG, "Compilation of shader failed.")
                 return 0
             }
@@ -117,34 +117,34 @@ class Renderer : GLSurfaceView.Renderer {
          */
         private fun linkProgram(vertexShaderId: Int, fragmentShaderId: Int): Int {
             // Create a new program object.
-            val programObjectId = GLES20.glCreateProgram()
+            val programObjectId = glCreateProgram()
             if (programObjectId == 0) {
                 Log.w(TAG, "Could not create new program")
                 return 0
             }
 
             // Attach the vertex shader to the program.
-            GLES20.glAttachShader(programObjectId, vertexShaderId)
+            glAttachShader(programObjectId, vertexShaderId)
             // Attach the fragment shader to the program.
-            GLES20.glAttachShader(programObjectId, fragmentShaderId)
+            glAttachShader(programObjectId, fragmentShaderId)
 
             // Link the two shaders together into a program.
-            GLES20.glLinkProgram(programObjectId)
+            glLinkProgram(programObjectId)
 
             // Get the link status.
             val linkStatus = IntArray(1)
-            GLES20.glGetProgramiv(programObjectId, GLES20.GL_LINK_STATUS, linkStatus, 0)
+            glGetProgramiv(programObjectId, GL_LINK_STATUS, linkStatus, 0)
 
             // Print the program info log to the Android log output.
             Log.v(TAG, """
                 Result log of linking program:
-                ${GLES20.glGetProgramInfoLog(programObjectId)}
+                ${glGetProgramInfoLog(programObjectId)}
             """.trimIndent())
 
             // Verify the link status.
             if (linkStatus[0] == 0) {
                 // If it failed, delete the program object.
-                GLES20.glDeleteProgram(programObjectId)
+                glDeleteProgram(programObjectId)
                 Log.w(TAG, "Linking of program failed.")
                 return 0
             }
@@ -161,13 +161,13 @@ class Renderer : GLSurfaceView.Renderer {
          * @return boolean
          */
         private fun validateProgram(programObjectId: Int): Boolean {
-            GLES20.glValidateProgram(programObjectId)
+            glValidateProgram(programObjectId)
             val validateStatus = IntArray(1)
-            GLES20.glGetProgramiv(programObjectId, GLES20.GL_VALIDATE_STATUS, validateStatus, 0)
+            glGetProgramiv(programObjectId, GL_VALIDATE_STATUS, validateStatus, 0)
             Log.v(TAG, """
                 Result status code of validating program: ${validateStatus[0]}
                 Log:
-                ${GLES20.glGetProgramInfoLog(programObjectId)}
+                ${glGetProgramInfoLog(programObjectId)}
             """.trimIndent())
             return validateStatus[0] != 0
         }
@@ -185,51 +185,51 @@ class Renderer : GLSurfaceView.Renderer {
 
     override fun onSurfaceCreated(gl10: GL10, eglConfig: EGLConfig) {
         Log.v(TAG, "onSurfaceCreated")
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
 
         // Compile the shaders.
-        val vertexShader = compileShader(GLES20.GL_VERTEX_SHADER, VERTEX_SHADER)
-        val fragmentShader = compileShader(GLES20.GL_FRAGMENT_SHADER, FRAGMENT_SHADER)
+        val vertexShader = compileShader(GL_VERTEX_SHADER, VERTEX_SHADER)
+        val fragmentShader = compileShader(GL_FRAGMENT_SHADER, FRAGMENT_SHADER)
 
         // Link them into a shader program.
         val program = linkProgram(vertexShader, fragmentShader)
         validateProgram(program)
 
         // Use this program.
-        GLES20.glUseProgram(program)
+        glUseProgram(program)
 
         // Retrieve uniform locations for the shader program.
-        uColor = GLES20.glGetUniformLocation(program, U_COLOR)
+        uColor = glGetUniformLocation(program, U_COLOR)
 
         // Retrieve attribute locations for the shader program.
-        aPosition = GLES20.glGetAttribLocation(program, A_POSITION)
+        aPosition = glGetAttribLocation(program, A_POSITION)
 
         // Bind our data, specified by the variable vertexData, to the vertex
         // attribute at location of A_POSITION.
         mVertexData.position(0)
-        GLES20.glVertexAttribPointer(
+        glVertexAttribPointer(
             aPosition,
             POSITION_COMPONENT_COUNT,
-            GLES20.GL_FLOAT,
+            GL_FLOAT,
             false,
             STRIDE,
             mVertexData
         )
-        GLES20.glEnableVertexAttribArray(aPosition)
+        glEnableVertexAttribArray(aPosition)
     }
 
     override fun onSurfaceChanged(gl10: GL10, width: Int, height: Int) {
         Log.v(TAG, "onSurfaceChanged")
         // Set the OpenGL viewport to fill the entire surface.
-        GLES20.glViewport(0, 0, width, height)
+        glViewport(0, 0, width, height)
     }
 
     override fun onDrawFrame(gl10: GL10) {
         // Clear the rendering surface.
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
+        glClear(GL_COLOR_BUFFER_BIT)
 
         // Draw a tile.
-        GLES20.glUniform4f(uColor, 1.0f, 0f, 0f, 1.0f) // 赤色
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4) // N 字形の順に描く
+        glUniform4f(uColor, 1.0f, 0f, 0f, 1.0f) // 赤色
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4) // N 字形の順に描く
     }
 }
