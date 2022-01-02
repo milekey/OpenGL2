@@ -183,7 +183,7 @@ class Renderer : GLSurfaceView.Renderer {
 
     override fun onSurfaceCreated(gl10: GL10, eglConfig: EGLConfig) {
         Log.v(TAG, "onSurfaceCreated")
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+        glClearColor(0f, 0f, 0f, 0f)
 
         // Compile the shaders.
         val vertexShader = compileShader(GL_VERTEX_SHADER, VERTEX_SHADER)
@@ -213,7 +213,7 @@ class Renderer : GLSurfaceView.Renderer {
         // Clear the rendering surface.
         glClear(GL_COLOR_BUFFER_BIT)
 
-        glUniform4f(uColor, 1.0f, 0f, 0f, 1.0f) // 赤色
+        glUniform4f(uColor, 1f, 0f, 0f, 1f) // 赤色
 
         // Bind our data, specified by the variable vertexData, to the vertex
         // attribute at location of A_POSITION.
