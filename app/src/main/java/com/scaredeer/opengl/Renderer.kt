@@ -196,10 +196,8 @@ class Renderer : GLSurfaceView.Renderer {
         // Use this program.
         glUseProgram(program)
 
-        // Retrieve uniform locations for the shader program.
+        // Retrieve pointer indices for inputting to variables.
         uColor = glGetUniformLocation(program, U_COLOR)
-
-        // Retrieve attribute locations for the shader program.
         aPosition = glGetAttribLocation(program, A_POSITION)
     }
 
