@@ -9,6 +9,8 @@ import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
+private val TAG = Renderer::class.simpleName
+
 /**
  * ゲームのメインループに相当するクラス
  * （もちろん、画面の更新を中心としたもので、ゲームモデルの論理的なループとは必ずしも同じではないが、
@@ -21,8 +23,6 @@ import javax.microedition.khronos.opengles.GL10
 class Renderer : GLSurfaceView.Renderer {
 
     companion object {
-        private val TAG = Renderer::class.simpleName
-
         private const val BYTES_PER_FLOAT = 4 // Java float is 32-bit = 4-byte
         private const val POSITION_COMPONENT_COUNT = 2 // x, y（※ z は常に 0 なので省略）
 

@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+private val TAG = MainActivity::class.simpleName
 
-    companion object {
-        private val TAG = MainActivity::class.simpleName
-    }
+class MainActivity : AppCompatActivity() {
 
     private lateinit var glSurfaceView: GLSurfaceView
 
