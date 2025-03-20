@@ -12,7 +12,7 @@ android {
         minSdk = 30
         targetSdk = 34
         versionCode = 1
-        versionName = "20230915"
+        versionName = "20250320"
     }
 
     buildTypes {
@@ -34,5 +34,5 @@ android {
 }
 
 dependencies {
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.12.0")
 }
